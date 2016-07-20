@@ -18,3 +18,11 @@ You will need the following things properly installed on your computer.
 * `$ python manage.py runserver`
 * Visit your app at [http://localhost:8000](http://localhost:8000).
 
+## Access Database
+
+* '$ python manage.py shell'
+
+## Testing
+
+To run the tests for polls, enter:
+* '$ python manage.py test polls'
