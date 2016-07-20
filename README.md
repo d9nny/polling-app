@@ -9,12 +9,12 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone https://github.com/d9nny/polling-app` this repository
+* `$ git clone https://github.com/d9nny/polling-app` this repository
 * change into the new directory
-* `python manage.py migrate`
+* `$ python manage.py migrate`
 
 ## Running / Development
 
-* `python manage.py runserver`
+* `$ python manage.py runserver`
 * Visit your app at [http://localhost:8000](http://localhost:8000).
 
