@@ -20,9 +20,9 @@ You will need the following things properly installed on your computer.
 
 ## Access Database
 
-* '$ python manage.py shell'
+* `$ python manage.py shell`
 
 ## Testing
 
-To run the tests for polls, enter:
-* '$ python manage.py test polls'
+* To run the tests for polls, enter:
+* `$ python manage.py test polls`

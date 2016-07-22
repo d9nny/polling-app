@@ -56,3 +56,55 @@ class QuestionViewTests(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertContains(response, "Past question")
 		self.assertQuerysetEqual(response.context['latest_question_list'], ['<Question: Past question>'])
+
+	def test_index_with_a_future_question(self):
+		"""Questions with a pub_date in the future should be hidden on the index page"""
+
+		create_question("Future question", 3)
+		response = self.client.get(reverse('polls:index'))
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, "No polls are available")
+		self.assertQuerysetEqual(response.context['latest_question_list'], [])
+
+	def test_index_with_a_past_and_future_question(self):
+		"""If both future and past questions exist, only past questions should be shown"""
+
+		create_question('Past question', -4)
+		create_question('Future question', 3)
+		response = self.client.get(reverse('polls:index'))
+		self.assertQuerysetEqual(response.context['latest_question_list'], ['<Question: Past question>'])
+
+	def test_index_with_two_two_past_questions(self):
+		"""Two past questions should be shown on the index page"""
+
+		create_question('Past question 1', -2)
+		create_question('Past question 2', -1)
+		response = self.client.get(reverse('polls:index'))
+		self.assertQuerysetEqual(response.context['latest_question_list'], ['<Question: Past question 2>', '<Question: Past question 1>'])
+
+
+class DetailViewTests(TestCase):
+
+	def test_detail_with_a_future_question(self):
+		"""The detail view of a future question should return a 404 - not found"""
+
+		future_question = create_question('Future question', 2)
+		url = reverse('polls:detail', args=(future_question.id,))
+		response = self.client.get(url)
+		self.assertEqual(response.status_code, 404)
+
+	def test_detail_with_a_past_question(self):
+		"""The detail view of a past question should display the question text"""
+
+		past_question = create_question('Past question', -3)
+		url = reverse('polls:detail', args = (past_question.id,))
+		response = self.client.get(url)
+		self.assertEqual(response.status_code, 200)
+		self.assertContains(response, past_question.question_text)
+
+
+
+
+
+
+
